@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 
 import AuctionHome.AuctionHome;
 
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
@@ -22,6 +23,9 @@ import java.io.File;
 import java.io.FileNotFoundException; 
 import java.util.Scanner;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 
@@ -30,7 +34,8 @@ public class LoginSystem {
 	private JFrame LoginSystem;
 	private JTextField txtUsername;
 	private JPasswordField txtPassword;
-
+	public static User loggedInUser;
+	public static String currentUser;
 	
 	 // Launch the application.
 	public static void main(String[] args) {
@@ -109,48 +114,53 @@ public class LoginSystem {
 				//Verification system
 				int verification = 1;
 				int verify = 0;
+				    
 				
 				
-				File usernameFile = new File("Username.txt");
-				File passwordFile = new File("Password.txt");
+			        //-------------------------------------NEW USER STORAGE---------------------------------------
+			        //-------------------------------------------TEST---------------------------------------------
+			        //--------------------------------------------------------------------------------------------
 
-				 
-				
-			        //Creating Scanner instance to read the user name file 
-			        Scanner scnr = null;
-					try {
-						scnr = new Scanner(usernameFile);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-			        //Creating Scanner instance to read the password file
-			        Scanner scnr2 = null;
-					try {
-						scnr2 = new Scanner(passwordFile);
-					} catch (FileNotFoundException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					
-					
+			            // holds the instance of a user who successfully logged in
+			            loggedInUser = null;
 
-			    	  
-			        //Reading each line of each file using Scanner class
-			        while(scnr.hasNextLine() && scnr2.hasNextLine()){
-			            String line = scnr.nextLine();
-			            String line2 = scnr2.nextLine();
-			            
-			            //If statement to determine if user name and password are correct
-			            if (username.equals(line) && password.equals(line2))
+			            // Cycles through list and checks for user name/password match
+			            for (User user : Register.getListOfUsers())
 			            {
-			            	verify++;
+			                if (user.getUsername().equals(username))
+			                {
+			                    if (user.getPassword().equals(password))
+			                    {
+			                    	//Sets the successfully logged in user to loggedInUser
+			                        loggedInUser = user;
+
+			                        // when a user is found, "break" stops cycling through the list
+			                        break;
+			                    }
+			                }
 			            }
-			        }
+
+			            // Shows if user successfully logged in or not by seeing if loggedInUser changed from null
+			            if (loggedInUser != null)
+			            {
+			                System.out.println("User successfully logged in: "+loggedInUser.getUsername());
+			                currentUser = loggedInUser.getUsername().toString();
+			                verify++;
+			            }
+			            
+			            else
+			            {
+			                System.out.println("Invalid username/password combination");
+			            }
 			        
+			//--------------------------------------------END TEST--------------------------------------------------
+			//------------------------------------------------------------------------------------------------------
 			        
+			            
+			            
+			            
+			            
+			            
 			        //if the user successfully inputs user name and password login screen will close
 			        //and open the auction home
 			        if (verify == verification) {
@@ -166,7 +176,7 @@ public class LoginSystem {
 			        {
 			        	JOptionPane.showMessageDialog(null, "Invalid Login Details"
 			        			, "Login Error", JOptionPane.ERROR_MESSAGE);
-			        	//sets text fiels to blank
+			        	//sets text fields to blank
 			        	txtUsername.setText(null);
 			        	txtPassword.setText(null);
 			        	

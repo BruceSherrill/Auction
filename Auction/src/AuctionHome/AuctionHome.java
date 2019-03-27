@@ -7,6 +7,13 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import LoginSystem.LoginSystem;
+import LoginSystem.User;
+
+import javax.swing.JTextPane;
+import javax.swing.JTextArea;
+import javax.swing.JToggleButton;
+
 public class AuctionHome {
 
 	private JFrame frame;
@@ -46,6 +53,15 @@ public class AuctionHome {
 		JLabel lblAuctionHome = new JLabel("Auction Home");
 		lblAuctionHome.setBounds(168, 94, 107, 14);
 		frame.getContentPane().add(lblAuctionHome);
+		
+		JLabel lblLoggedOnAs = new JLabel("Logged on as: ");
+		lblLoggedOnAs.setBounds(108, 152, 93, 16);
+		frame.getContentPane().add(lblLoggedOnAs);
+		
+		String currentUser = LoginSystem.currentUser;
+		
+		JLabel lblNewLabel = new JLabel(currentUser);
+		lblNewLabel.setBounds(219, 152, 189, 16);
+		frame.getContentPane().add(lblNewLabel);
 	}
-
 }

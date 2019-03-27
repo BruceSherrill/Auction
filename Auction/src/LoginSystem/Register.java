@@ -13,8 +13,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.File;
@@ -33,6 +33,8 @@ public class Register {
 	public String lastName;
 	public String username;
 	public String password;
+
+    private static List<User> listOfUsers = new ArrayList<>();
 
 	
 	 //Launch the application.
@@ -123,6 +125,7 @@ public class Register {
 		txtPassword = new JPasswordField();
 		txtPassword.setBounds(146, 304, 142, 21);
 		AccountRegistration.getContentPane().add(txtPassword);
+
 		
 		//REGISTER BUTTON
 		JButton btnRegister = new JButton("Register");
@@ -135,71 +138,14 @@ public class Register {
 				lastName = txtLastName.getText();
 				username = txtUsername.getText();
 				password = txtPassword.getText();
-			
-				
-				
-				File usernameFile = new File("Username.txt");
-				File passwordFile = new File("Password.txt");
-
-				
-				//Checks to see if the file already exists on the users computer
-				//and if it doesn't it creates the file
-				 if(usernameFile.exists()==false)
-				    {
-				            try {
-								usernameFile.createNewFile();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-				    }
-				 
-				 if(passwordFile.exists()==false)
-				    {
-				            try {
-								passwordFile.createNewFile();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-				    }
 				 
 				 //If Statement verifies that no inputs are blanks
 				 if (username != null && !username.isEmpty() && password != null && !password.isEmpty() 
 					&& firstName != null && !firstName.isEmpty() && lastName != null && !lastName.isEmpty())
 				 {
 					 
-				 	//print writer allows you to output to a file
-				    PrintWriter out1 = null;
-					try {
-						out1 = new PrintWriter(new FileWriter(usernameFile, true));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}	
-		
-					//writing user name to username.txt
-				    out1.append(username);
-				    out1.append(System.getProperty("line.separator"));
-				    out1.close();
-				    
-				    PrintWriter out2 = null;
-					try {
-						out2 = new PrintWriter(new FileWriter(passwordFile, true));
-					} catch (IOException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					
-					//writing password to password.txt
-				    out2.append(password);
-				    out2.append(System.getProperty("line.separator"));
-				    out2.close();
-				    //message dialog that tells user account was successfully created
-		        	JOptionPane.showMessageDialog(null, "Account Registration Successful", 
-		        			"Account created", 
-		        			JOptionPane.INFORMATION_MESSAGE);
-
+					 	//Adds new user to array list
+			            listOfUsers.add(new User(username,password));
 		        	
 		        	//Closes the account registration page
 				    AccountRegistration.dispose();
@@ -224,9 +170,18 @@ public class Register {
 			}
 		});
 		
+
+
 		btnRegister.setBounds(146, 392, 89, 23);
 		AccountRegistration.getContentPane().add(btnRegister);
 	}
+
+
+
+	public static List<User> getListOfUsers() {
+		return listOfUsers;
+	}
+
 
 
 	
