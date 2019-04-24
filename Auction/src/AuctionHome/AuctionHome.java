@@ -1,67 +1,104 @@
-//temporary Auction home page
-
 package AuctionHome;
 
-import java.awt.EventQueue;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 
-import LoginSystem.LoginSystem;
-import LoginSystem.User;
+import LoginSystem.Login;
 
-import javax.swing.JTextPane;
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
-
-public class AuctionHome {
-
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					AuctionHome window = new AuctionHome();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Create the application.
-	 */
+public class AuctionHome extends JFrame {
 	public AuctionHome() {
-		initialize();
 	}
+	
+	//Labels
+	JLabel lblAuctionHome = new JLabel("Auction Home");
+	JLabel lblLoggedInAs = new JLabel("Hello, " + Login.getUsername());
 
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(null);
+	//Buttons
+	JButton btnLogout = new JButton("LOGOUT");
+
+	//Panels
+	private JPanel MainPanel = new JPanel();
+
+	//Separator
+	JSeparator separator = new JSeparator();
+	
+	
+	private class AddBtnListener implements ActionListener	
+	{
 		
-		JLabel lblAuctionHome = new JLabel("Auction Home");
-		lblAuctionHome.setBounds(168, 94, 107, 14);
-		frame.getContentPane().add(lblAuctionHome);
-		
-		JLabel lblLoggedOnAs = new JLabel("Logged on as: ");
-		lblLoggedOnAs.setBounds(108, 152, 93, 16);
-		frame.getContentPane().add(lblLoggedOnAs);
-		
-		String currentUser = LoginSystem.currentUser;
-		
-		JLabel lblNewLabel = new JLabel(currentUser);
-		lblNewLabel.setBounds(219, 152, 189, 16);
-		frame.getContentPane().add(lblNewLabel);
+		@Override
+		public void actionPerformed(ActionEvent e) 
+		{
+			
+			
+			 if (e.getActionCommand().equals("LOGOUT")) 
+			 {
+				 	setVisible(false);
+		        	Login.main(null);
+			 }
+			 
+			 
+		}
 	}
+	
+	
+	
+	
+	public AuctionHome(String title)	{
+		super(title);
+		
+		setBounds(100, 100, 1009, 701);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		buildMainFrame();
+		addListeners();
+		setVisible(true);
+
+}
+	
+	
+	
+	private void addListeners() {
+		btnLogout.addActionListener(new AddBtnListener());
+	}
+	
+	
+	private void buildMainFrame() {
+		MainPanel.setLayout(null);
+		
+		lblLoggedInAs.setBounds(12, 11, 386, 87);
+		lblLoggedInAs.setFont(new Font("Microsoft YaHei Light", Font.PLAIN, 20));
+		MainPanel.add(lblLoggedInAs);
+		
+		lblAuctionHome.setBounds(259, 0, 437, 98);
+		lblAuctionHome.setFont(new Font("Microsoft YaHei UI Light", Font.PLAIN, 60));
+		MainPanel.add(lblAuctionHome);
+		
+		btnLogout.setBounds(750, 40, 198, 36);
+		MainPanel.add(btnLogout);
+		
+		separator.setBounds(0, 100, 991, 2);
+		MainPanel.add(separator);
+
+		
+		
+		getContentPane().add(MainPanel);
+	}
+		
+	
+		public static void main(String[] args) 
+		{
+			AuctionHome gui = new AuctionHome("AuctionHome2 GUI");
+		}
+		
+	
+
 }
