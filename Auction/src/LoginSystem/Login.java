@@ -15,8 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import AuctionHome.AuctionHome;
-import AuctionHome.panelTest;
+import AuctionHome.HomeScreen;
+import LoginSystem.User;
 
 
 public class Login extends JFrame {
@@ -45,7 +45,7 @@ public class Login extends JFrame {
 	private static String username;
 	private String password;
 	
-
+	User user = new User();
 	
 	
 	
@@ -57,11 +57,15 @@ public class Login extends JFrame {
 		
 			//LOGIN BUTTON
 	        if (e.getActionCommand().equals("Login")) {
-
+	        	
 				//User inputs set equal to strings
-				 password = txtPassword.getText();
-				 username = txtUsername.getText();
-				
+
+				 user.setUsername(txtUsername.getText());
+				 user.setPassword(txtPassword.getText());
+
+				 username = user.getUsername();
+				 password = user.getPassword();
+				 
 				//Verification system
 				Boolean verify = false;
 				
@@ -108,7 +112,7 @@ public class Login extends JFrame {
 			        if (verify == true) {
 
 			    		setVisible(false);
-			        	panelTest.main(null);
+			        	HomeScreen.main(null);
 			        	
 			        }
 			        
@@ -204,14 +208,7 @@ public class Login extends JFrame {
 	}
 	
 	
-	//Getter and setter for user name
-	public static String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		Login.username = username;
-	}
+	
 
 
 
